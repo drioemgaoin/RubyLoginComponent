@@ -10,4 +10,7 @@ module Component
 
   mattr_accessor :navigational_formats
   @@navigational_formats = ["*/*", :html]
+
+  mattr_accessor :router_name
+  @@router_name = nil
 end
