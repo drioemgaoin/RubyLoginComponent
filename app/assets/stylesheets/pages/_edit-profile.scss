@@ -1,0 +1,55 @@
+.edit-profile {
+  padding: 90px 10px 10px 10px;
+
+  h2 {
+    text-align: center;
+  }
+
+  @media (min-width: 550px) {
+    width: 80%;
+  }
+
+  @media (min-width: 750px) {
+    width: 50%;
+  }
+
+  @media (min-width: 1000px) {
+    width: 30%;
+  }
+
+  .avatar {
+    position: relative;
+
+    &:hover::before {
+      cursor: pointer;
+    }
+
+    .default {
+      height: 300px;
+    }
+
+    &:before {
+      font-family: FontAwesome;
+      content: "\f044";
+      position: absolute;
+      font-weight: 400;
+      top: -5px;
+      right: calc(100% - 435px);
+      font-size: 2.5em;
+      background: #fff;
+      color: orange;
+      padding: 5px 5px 0px 5px;
+      border-radius: 0px 0px 0px 10px;
+    }
+
+    img {
+      margin: 0 auto;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    margin-bottom: 50px;
+  }
+}

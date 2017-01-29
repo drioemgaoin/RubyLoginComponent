@@ -1,0 +1,113 @@
+.navbar {
+  position: fixed;
+  width: 100%;
+  background: #FFFFFF;
+  height: 50px;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.75);
+
+  .toggle, .brand {
+    display: inline-block;
+  }
+
+  .link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    background: #fff;
+    color: #000;
+
+    &:hover,
+    &:active,
+    &:active {
+      background: #000;
+      color: #fff;
+    }
+  }
+
+  .brand {
+    text-align: center;
+    padding: 15px;
+    color: #000;
+    background-color: #ffe939;
+  }
+
+  .toggle {
+    padding: 15px;
+    color: black;
+  }
+}
+
+@media (min-width: 550px) {
+  .navbar {
+    display: flex;
+
+    .left,.right {
+      display: flex;
+      flex: 1;
+    }
+
+    .link {
+      width: auto;
+    }
+
+    .right {
+      justify-content: flex-end;
+    }
+
+    .toggle {
+      display: none;
+    }
+  }
+}
+
+.navbar {
+  div {
+    display: none;
+
+    @media (min-width: 550px) {
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 550px) {
+  .navbar {
+    position: relative;
+
+    .toggle {
+      float: right;
+    }
+
+    div {
+      float: left;
+    }
+
+    &.active {
+      .toggle {
+        background: #000;
+        color: white;
+      }
+
+      div {
+        display: block;
+        float: right;
+        width: 100%;
+      }
+
+      .link {
+        background: #000;
+        color: #fff;
+
+        &:hover,
+        &:active {
+          background: #fff;
+          color: #000;
+        }
+      }
+    }
+  }
+}

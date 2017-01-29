@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RubyLoginComponent</title>
+    <title>RubyMvcBoilerplate</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Romain Diegoni ruby login component">
+    <meta name="keywords" content="romain diegoni, developer, full stack, github, ruby, login, component, microservices" />
+    <meta name="format-detection" content="telephone=no">
   </head>
 
   <body>
+    <%= render "partials/navbar" %>
     <%= yield %>
   </body>
 </html>

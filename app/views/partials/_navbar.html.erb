@@ -1,0 +1,11 @@
+<nav class="navbar">
+  <a href="#" class="toggle"><i class="fa fa-reorder"></i></a>
+  <a href="#" class="brand">Login Component</a>
+  <div class="left">
+    <%= link_to 'Home', root_path, method: :get , class: "link" %>
+  </div>
+  <div class="right">
+    <%= link_to 'Log out', sign_out_path, method: :delete, class: "link"  %>
+    <%= link_to 'Log In', new_sign_in_path, method: :get , class: "link"  %>
+  </div>
+</nav>

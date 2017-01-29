@@ -1,0 +1,56 @@
+// -----------------------------------------------------------------------------
+// This file contains all @font-face declarations, if any.
+// -----------------------------------------------------------------------------
+#error_explanation {
+  margin-bottom: 30px;
+}
+
+.has-error {
+  position: relative;
+
+  > input {
+    border: 1px solid #a94442;
+    padding-right: 30px;
+  }
+
+  > span.form-control-feedback {
+    @include icon('times');
+
+    position: absolute;
+    color: #a94442;
+    top: 10px;
+    right: 7px;
+
+    &:before {
+      content: "\f00d";
+      float: right;
+    }
+  }
+
+  > .help-block {
+    color: #a94442;
+    padding: 10px 0px;
+
+    > ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+  }
+}
+
+.flash {
+  padding: 10px;
+
+  &.error,
+  &.alert {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+  }
+
+  &.notice {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+  }
+}
