@@ -1,25 +1,19 @@
-class User < ApplicationRecord
-  if respond_to?(:helper_method)
-    helper_method "current_user", "user_signed_in?", "user_session"
+class User
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+
+  attr_accessor :email, :password
+
+  validates_presence_of :email
+
+  def initialize(attributes = {})
+    attributes.each do |key, value|
+      self.send(:"#{key}=", value)
+    end
   end
 
-  def self.authentication_keys
-    @authentication_keys ||= [:email]
-  end
-
-  def authenticate_user!(opts={})
-    opts[:scope] = :user
-  end
-
-  def user_signed_in?
-    !!current_user
-  end
-
-  def current_user
-    @current_user
-  end
-
-  def user_session
-    current_user
+  def persisted?
+    false
   end
 end

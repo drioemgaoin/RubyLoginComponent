@@ -5,7 +5,10 @@
     <%= link_to 'Home', root_path, method: :get , class: "link" %>
   </div>
   <div class="right">
-    <%= link_to 'Log out', sign_out_path, method: :delete, class: "link"  %>
-    <%= link_to 'Log In', new_sign_in_path, method: :get , class: "link"  %>
+    <% if user_signed_in? %>
+      <%= link_to 'Log out', sign_out_path, method: :delete, class: "link"  %>
+    <% else %>
+      <%= link_to 'Log In', new_sign_in_path, method: :get , class: "link"  %>
+    <% end %>
   </div>
 </nav>

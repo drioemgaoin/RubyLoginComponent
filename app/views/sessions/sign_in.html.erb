@@ -1,7 +1,7 @@
 <div class="vcontainer login">
   <h2>Log in</h2>
 
-  <%= form_for(resource, url:sign_in_path(resource), :html => { :class => "" }) do |f| %>
+  <%= form_for(resource, as: resource_name, url:sign_in_path(resource_name), :html => { :class => "" }) do |f| %>
     <%= render "partials/error" %>
 
     <div class="field column">

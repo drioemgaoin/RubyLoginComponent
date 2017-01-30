@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
   if respond_to?(:helper_method)
-    helpers = %w(resource scope_name resource_name resource_class resource_params)
+    helpers = %w(resource scope_name resource_name resource_class resource_params current_user user_signed_in? user_session)
     helper_method(*helpers)
   end
 
@@ -19,6 +19,22 @@ class ApplicationController < ActionController::Base
     include Component::Controllers::Helpers
   end
 
+  def authenticate_user!(opts={})
+    opts[:scope] = :user
+  end
+
+  def user_signed_in?
+    !!current_user
+  end
+
+  def current_user
+    @current_user
+  end
+
+  def user_session
+    current_user
+  end
+
   protected
 
     def resource=(new_resource)
@@ -26,7 +42,7 @@ class ApplicationController < ActionController::Base
     end
 
     def resource
-      instance_variable_get(:"@user")
+      instance_variable_get(:"@#{resource_name}")
     end
 
     def resource_name
@@ -58,8 +74,13 @@ class ApplicationController < ActionController::Base
       @request_format ||= request.format.try(:ref)
     end
 
+    def self.authentication_keys
+      @authentication_keys ||= [:email]
+    end
+
     def set_flash_message(key, kind, options = {})
       message = find_message(kind, options)
+
       if options[:now]
         flash.now[key] = message if message.present?
       else
@@ -85,6 +106,7 @@ class ApplicationController < ActionController::Base
       options[:default] = Array(options[:default]).unshift(kind.to_sym)
       options[:resource_name] = resource_name
       options = component_i18n_options(options)
+
       I18n.t("#{options[:resource_name]}.#{kind}", options)
     end
     helper_method :find_message
