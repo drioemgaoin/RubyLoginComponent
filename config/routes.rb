@@ -8,6 +8,10 @@ Rails.application.routes.draw do
   get 'new_sign_up', to: 'registrations#new'
   post 'sign_up', to: 'registrations#sign_up'
 
-  root :to => 'home#index'
+  get 'new_password', to: 'passwords#new'
+  post 'password', to: 'passwords#create'
+  match 'users/password/edit', to: 'passwords#edit',  via: [:get]
+  put 'password', to: 'passwords#update'
 
+  root :to => 'home#index'
 end

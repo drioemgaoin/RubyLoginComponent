@@ -3,7 +3,7 @@ class User
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-  attr_accessor :email, :password
+  attr_accessor :email, :password, :password_confirmation, :reset_password_token
 
   validates_presence_of :email
 

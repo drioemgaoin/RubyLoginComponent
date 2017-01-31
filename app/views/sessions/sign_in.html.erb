@@ -18,6 +18,11 @@
       <%= f.submit "Log in", :class => "btn btn-success" %>
     </div>
 
+    <p class="text-center text-muted">
+      <small>Don't have an account yet? <%= link_to "Sign up", new_sign_up_path(resource_name) %></small><br />
+      <small>Forget your password? <%= link_to "Forgot your password", new_password_path(resource_name) %></small><br />
+    </p>
+
   <% end %>
 
   <div class="signup-or-separator">
