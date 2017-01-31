@@ -1,0 +1,36 @@
+<div class="vcontainer signup">
+  <h2>Sign up</h2>
+
+  <%= form_for(resource, as: resource_name, url: sign_up_path(resource_name)) do |f| %>
+    <%= render "partials/error" %>
+
+    <div class="field column">
+      <%= f.label :email %>
+      <%= f.email_field :email, autofocus: true %>
+    </div>
+
+    <div class="field column">
+      <div  class="field row no-space">
+        <%= f.label :password %>
+      </div>
+      <%= f.password_field :password, autocomplete: "off" %>
+    </div>
+
+    <div class="field column">
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    </div>
+
+    <p class="text-center text-muted">
+      <small>By clicking on Sign up, you agree to <a href="#">terms & conditions</a> and <a href="#">privacy policy</a></small>
+    </p>
+
+    <div class="action">
+      <%= f.submit "Sign up", :class => "btn btn-primary" %>
+    </div>
+    <br/>
+    <p class="text-center text-muted">
+      <small>Already have an account? <a href="/#/login">Log in now</a></small>
+    </p>
+  <% end %>
+</div>

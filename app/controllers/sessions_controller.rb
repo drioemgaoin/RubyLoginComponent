@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   prepend_before_action :require_no_authentication, only: [:new]
   prepend_before_action :verify_signed_out_user, only: :destroy
-  
+
   def new
     response = HTTParty.get("http://localhost:4000/users/sign_in")
 
@@ -47,8 +47,6 @@ class SessionsController < ApplicationController
     end
 
     def respond_to_on_destroy
-      # We actually need to hardcode this as Rails default responder doesn't
-      # support returning empty response on GET request
       respond_to do |format|
         format.all { head :no_content }
         format.any(*navigational_formats) { redirect_to after_sign_out_path_for(resource_name) }
