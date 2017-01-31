@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  prepend_before_action :require_no_authentication, only: [:new]
+  prepend_before_action :verify_signed_out_user, only: :destroy
+  
   def new
     response = HTTParty.get("http://localhost:4000/users/sign_in")
 
@@ -10,11 +13,14 @@ class SessionsController < ApplicationController
 
   def sign_in
     self.resource = User.new(sign_in_params)
-    response = HTTParty.post("http://localhost:4000/users/sign_in", body: { user: resource })
+    response = HTTParty.post("http://localhost:4000/users/sign_in", body: { user: resource.as_json })
 
     if response.success?
+      authenticate(self.resource.email)
       set_flash_message!(:notice, :signed_in)
       redirect_to root_path
+    else
+      set_flash_message :error, :invalid, { scope: "component", resource_name: "failure" }
     end
   end
 
@@ -22,6 +28,7 @@ class SessionsController < ApplicationController
     response = HTTParty.delete("http://localhost:4000/users/sign_out")
 
     if response.success?
+      authenticate(nil)
       set_flash_message! :notice, :signed_out
       respond_to_on_destroy
     end
@@ -33,16 +40,10 @@ class SessionsController < ApplicationController
 
   private
     def verify_signed_out_user
-      if all_signed_out?
+      if authenticate?
         set_flash_message! :notice, :already_signed_out
         respond_to_on_destroy
       end
-    end
-
-    def all_signed_out?
-      # users = Devise.mappings.keys.map { |s| warden.user(scope: s, run_callbacks: false) }
-      # users.all?(&:blank?)
-      true
     end
 
     def respond_to_on_destroy

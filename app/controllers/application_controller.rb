@@ -19,23 +19,29 @@ class ApplicationController < ActionController::Base
     include Component::Controllers::Helpers
   end
 
-  def authenticate_user!(opts={})
-    opts[:scope] = :user
-  end
-
   def user_signed_in?
-    !!current_user
-  end
-
-  def current_user
-    @current_user
-  end
-
-  def user_session
-    current_user
+    authenticate?
   end
 
   protected
+
+    def authenticate email
+      session[:user_email] = email
+    end
+
+    def authenticate?
+      !!session[:user_email]
+    end
+
+    def require_no_authentication
+      return unless is_navigational_format?
+
+      if authenticate?
+        puts I18n.t("component.failure.already_authenticated")
+        flash[:alert] = I18n.t("component.failure.already_authenticated")
+        redirect_to root_path
+      end
+    end
 
     def resource=(new_resource)
       instance_variable_set(:"@#{resource_name}", new_resource)
@@ -104,9 +110,8 @@ class ApplicationController < ActionController::Base
     def find_message(kind, options = {})
       options[:scope] ||= translation_scope
       options[:default] = Array(options[:default]).unshift(kind.to_sym)
-      options[:resource_name] = resource_name
+      options[:resource_name] ||= resource_name
       options = component_i18n_options(options)
-
       I18n.t("#{options[:resource_name]}.#{kind}", options)
     end
     helper_method :find_message
