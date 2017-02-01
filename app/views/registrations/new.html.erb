@@ -30,7 +30,7 @@
     </div>
     <br/>
     <p class="text-center text-muted">
-      <small>Already have an account? <a href="/#/login">Log in now</a></small>
+      <small>Already have an account? <%= link_to "Log in now", new_sign_in_path(resource_name) %></small>
     </p>
   <% end %>
 </div>
