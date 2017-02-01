@@ -22,10 +22,22 @@ class PasswordsController < ApplicationController
   end
 
   def update
-    puts "UPDATE PASSWORD"
+    self.resource = resource_class.new(change_password_params)
+    response = HTTParty.patch("http://localhost:4000/users/password", body: { user: resource.as_json })
+
+    if response.success?
+      set_flash_message!(:notice, :updated)
+      redirect_to new_sign_in_path(resource_name)
+    else
+      set_flash_message :error, :invalid, { scope: "component", resource_name: "failure" }
+    end
   end
 
   def password_params
     params.require(:user).permit(:email)
+  end
+
+  def change_password_params
+    params.require(:user).permit(:reset_password_token, :password, :password_confirmation)
   end
 end
