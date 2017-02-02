@@ -30,6 +30,7 @@ class PasswordsController < ApplicationController
       redirect_to new_sign_in_path(resource_name)
     else
       set_flash_message :error, :invalid, { scope: "component", resource_name: "failure" }
+      redirect_to "/users/password/edit?reset_password_token=#{resource.reset_password_token}"
     end
   end
 
