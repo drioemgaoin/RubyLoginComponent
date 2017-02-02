@@ -10,9 +10,11 @@ class PasswordsController < ApplicationController
     if response.success?
       authenticate(self.resource.email)
       set_flash_message!(:notice, :password)
-      redirect_to root_path
+      redirect_to new_sign_in_path
     else
-      set_flash_message :error, :invalid, { scope: "component", resource_name: "failure" }
+      parsed_response = JSON.parse(response.body ,:symbolize_names => true)
+      flash[:error] = parsed_response[:errors].map{ |k, v|  "#{k} #{v[0]}".camelize }.join('\r\n')
+      redirect_to new_password_path
     end
   end
 
@@ -27,9 +29,10 @@ class PasswordsController < ApplicationController
 
     if response.success?
       set_flash_message!(:notice, :updated)
-      redirect_to new_sign_in_path(resource_name)
+      redirect_to new_sign_in_path
     else
-      set_flash_message :error, :invalid, { scope: "component", resource_name: "failure" }
+      parsed_response = JSON.parse(response.body ,:symbolize_names => true)
+      flash[:error] = parsed_response[:errors].map{ |k, v|  "#{k} #{v[0]}".camelize }.join('\r\n')
       redirect_to "/users/password/edit?reset_password_token=#{resource.reset_password_token}"
     end
   end

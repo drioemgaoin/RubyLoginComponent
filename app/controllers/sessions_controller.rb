@@ -12,6 +12,7 @@ class SessionsController < ApplicationController
   end
 
   def sign_in
+    puts "SIGN IN POST---------"
     self.resource = User.new(sign_in_params)
     response = HTTParty.post("http://localhost:4000/users/sign_in", body: { user: resource.as_json })
 
@@ -41,6 +42,8 @@ class SessionsController < ApplicationController
   private
     def verify_signed_out_user
       if authenticate?
+        puts "CHECK---------"
+        puts session[:user_email]
         set_flash_message! :notice, :already_signed_out
         respond_to_on_destroy
       end
