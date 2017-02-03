@@ -25,12 +25,16 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def authenticate email
-      session[:user_email] = email
+    def authenticate
+      session[:user] = self.resource
+    end
+
+    def unauthenticate
+      session[:user] = nil
     end
 
     def authenticate?
-      !!session[:user_email]
+      !!session[:user]
     end
 
     def require_no_authentication

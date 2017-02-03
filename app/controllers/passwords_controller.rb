@@ -8,7 +8,6 @@ class PasswordsController < ApplicationController
     response = HTTParty.post("http://localhost:4000/users/password", body: { user: resource.as_json })
 
     if response.success?
-      authenticate(self.resource.email)
       set_flash_message!(:notice, :password)
       redirect_to new_sign_in_path
     else
