@@ -14,7 +14,7 @@ class PasswordsController < ApplicationController
     else
       parsed_response = JSON.parse(response.body ,:symbolize_names => true)
       flash[:error] = parsed_response[:errors].map{ |k, v|  "#{k} #{v[0]}".camelize }.join('\r\n')
-      redirect_to new_password_path
+      render :new
     end
   end
 
@@ -33,7 +33,7 @@ class PasswordsController < ApplicationController
     else
       parsed_response = JSON.parse(response.body ,:symbolize_names => true)
       flash[:error] = parsed_response[:errors].map{ |k, v|  "#{k} #{v[0]}".camelize }.join('\r\n')
-      redirect_to "/users/password/edit?reset_password_token=#{resource.reset_password_token}"
+      render :edit
     end
   end
 
