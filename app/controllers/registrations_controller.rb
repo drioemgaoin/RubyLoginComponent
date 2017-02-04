@@ -11,6 +11,10 @@ class RegistrationsController < ApplicationController
       authenticate(self.resource.email)
       set_flash_message!(:notice, :signed_up)
       redirect_to root_path
+    else
+      parsed_response = JSON.parse(response.body ,:symbolize_names => true)
+      flash[:error] = parsed_response[:errors].map{ |k, v|  "#{k} #{v[0]}".camelize }.join('\r\n')
+      render :new
     end
   end
 
