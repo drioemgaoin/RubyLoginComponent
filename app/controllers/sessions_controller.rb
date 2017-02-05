@@ -31,6 +31,10 @@ class SessionsController < ApplicationController
       unauthenticate
       set_flash_message! :notice, :signed_out
       respond_to_on_destroy
+    else
+      parsed_response = JSON.parse(response.body ,:symbolize_names => true)
+      flash[:error] = parsed_response[:errors].map{ |k, v|  "#{k} #{v[0]}".camelize }.join('\r\n')
+      render :new
     end
   end
 
